@@ -1,0 +1,291 @@
+package com.airline.flight.repository
+
+import com.airline.flight.entity.FlightScheduleEntity
+import com.airline.shared.enums.FlightStatus
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest
+import org.springframework.test.context.TestConstructor
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
+
+@DataR2dbcTest
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class FlightScheduleEntityRepositoryTest(
+    private val scheduleRepository: FlightScheduleEntityRepository
+) {
+
+    @Test
+    fun `save should persist schedule entity and return saved entity with generated id`() = runTest {
+        val scheduleEntity = createScheduleEntity()
+
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+
+        assertNotNull(savedEntity.id)
+        assertEquals(scheduleEntity.flightNumber, savedEntity.flightNumber)
+        assertEquals(scheduleEntity.scheduleDate, savedEntity.scheduleDate)
+        assertEquals(scheduleEntity.departureDateTime, savedEntity.departureDateTime)
+        assertEquals(scheduleEntity.arrivalDateTime, savedEntity.arrivalDateTime)
+        assertEquals(scheduleEntity.availableSeats, savedEntity.availableSeats)
+        assertEquals(scheduleEntity.price, savedEntity.price)
+        assertEquals(scheduleEntity.status, savedEntity.status)
+    }
+
+    @Test
+    fun `findById should return schedule entity when schedule exists`() = runTest {
+        val scheduleEntity = createScheduleEntity()
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+
+        val foundEntity = scheduleRepository.findById(savedEntity.id!!)
+
+        assertNotNull(foundEntity)
+        assertEquals(savedEntity.id, foundEntity.id)
+        assertEquals(savedEntity.flightNumber, foundEntity.flightNumber)
+    }
+
+    @Test
+    fun `findById should return null when schedule does not exist`() = runTest {
+        val nonExistentId = UUID.randomUUID()
+
+        val foundEntity = scheduleRepository.findById(nonExistentId)
+
+        assertNull(foundEntity)
+    }
+
+    @Test
+    fun `findByDate should return schedules for specific date when schedules exist`() = runTest {
+        val targetDate = LocalDate.of(2025, 9, 28)
+        val schedule1 = createScheduleEntity().copy(
+            scheduleDate = targetDate.atTime(6, 0)
+        )
+        val schedule2 = createScheduleEntity().copy(
+            flightNumber = "AI102",
+            scheduleDate = targetDate.atTime(12, 0)
+        )
+        val differentDateSchedule = createScheduleEntity().copy(
+            flightNumber = "AI103",
+            scheduleDate = LocalDate.of(2025, 9, 29).atTime(6, 0)
+        )
+
+        scheduleRepository.save(schedule1)
+        scheduleRepository.save(schedule2)
+        scheduleRepository.save(differentDateSchedule)
+
+        val schedulesForDate = scheduleRepository.findByDate(targetDate).toList()
+
+        assertTrue(schedulesForDate.size >= 2)
+        assertTrue(schedulesForDate.all { it.scheduleDate.toLocalDate() == targetDate })
+        assertTrue(schedulesForDate.all { it.status == FlightStatus.SCHEDULED })
+    }
+
+    @Test
+    fun `findByDate should return empty flow when no schedules exist for date`() = runTest {
+        val targetDate = LocalDate.of(2025, 12, 31)
+
+        val schedulesForDate = scheduleRepository.findByDate(targetDate).toList()
+
+        assertTrue(schedulesForDate.isEmpty())
+    }
+
+    @Test
+    fun `findByDateRange should return schedules within date range when schedules exist`() = runTest {
+        val startDate = LocalDate.of(2025, 9, 28)
+        val endDate = LocalDate.of(2025, 9, 30)
+        
+        val schedule1 = createScheduleEntity().copy(
+            scheduleDate = startDate.atTime(6, 0)
+        )
+        val schedule2 = createScheduleEntity().copy(
+            flightNumber = "AI102",
+            scheduleDate = startDate.plusDays(1).atTime(12, 0)
+        )
+        val schedule3 = createScheduleEntity().copy(
+            flightNumber = "AI103",
+            scheduleDate = endDate.atTime(18, 0)
+        )
+        val outsideRangeSchedule = createScheduleEntity().copy(
+            flightNumber = "AI104",
+            scheduleDate = endDate.plusDays(1).atTime(6, 0)
+        )
+
+        scheduleRepository.save(schedule1)
+        scheduleRepository.save(schedule2)
+        scheduleRepository.save(schedule3)
+        scheduleRepository.save(outsideRangeSchedule)
+
+        val schedulesInRange = scheduleRepository.findByDateRange(startDate, endDate).toList()
+
+        assertTrue(schedulesInRange.size >= 3)
+        assertTrue(schedulesInRange.all { 
+            val scheduleDate = it.scheduleDate.toLocalDate()
+            !scheduleDate.isBefore(startDate) && !scheduleDate.isAfter(endDate)
+        })
+        assertTrue(schedulesInRange.all { it.status == FlightStatus.SCHEDULED })
+    }
+
+    @Test
+    fun `reserveSeats should update available seats when sufficient seats available`() = runTest {
+        val scheduleEntity = createScheduleEntity().copy(availableSeats = 100)
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+        val seatsToReserve = 10
+
+        val updatedRows = scheduleRepository.reserveSeats(savedEntity.id!!, seatsToReserve)
+
+        assertEquals(1, updatedRows)
+        
+        val updatedEntity = scheduleRepository.findById(savedEntity.id!!)
+        assertNotNull(updatedEntity)
+        assertEquals(90, updatedEntity.availableSeats)
+    }
+
+    @Test
+    fun `reserveSeats should not update when insufficient seats available`() = runTest {
+        val scheduleEntity = createScheduleEntity().copy(availableSeats = 5)
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+        val seatsToReserve = 10
+
+        val updatedRows = scheduleRepository.reserveSeats(savedEntity.id!!, seatsToReserve)
+
+        assertEquals(0, updatedRows)
+        
+        val unchangedEntity = scheduleRepository.findById(savedEntity.id!!)
+        assertNotNull(unchangedEntity)
+        assertEquals(5, unchangedEntity.availableSeats)
+    }
+
+    @Test
+    fun `releaseSeats should increase available seats when schedule exists`() = runTest {
+        val scheduleEntity = createScheduleEntity().copy(availableSeats = 90)
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+        val seatsToRelease = 10
+
+        val updatedRows = scheduleRepository.releaseSeats(savedEntity.id!!, seatsToRelease)
+
+        assertEquals(1, updatedRows)
+        
+        val updatedEntity = scheduleRepository.findById(savedEntity.id!!)
+        assertNotNull(updatedEntity)
+        assertEquals(100, updatedEntity.availableSeats)
+    }
+
+    @Test
+    fun `releaseSeats should not update when schedule does not exist`() = runTest {
+        val nonExistentId = UUID.randomUUID()
+        val seatsToRelease = 10
+
+        val updatedRows = scheduleRepository.releaseSeats(nonExistentId, seatsToRelease)
+
+        assertEquals(0, updatedRows)
+    }
+
+    @Test
+    fun `updateStatus should change flight status when schedule exists`() = runTest {
+        val scheduleEntity = createScheduleEntity().copy(status = FlightStatus.SCHEDULED)
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+        val newStatus = FlightStatus.CANCELLED
+
+        val updatedRows = scheduleRepository.updateStatus(savedEntity.id!!, newStatus)
+
+        assertEquals(1, updatedRows)
+        
+        val updatedEntity = scheduleRepository.findById(savedEntity.id!!)
+        assertNotNull(updatedEntity)
+        assertEquals(newStatus, updatedEntity.status)
+    }
+
+    @Test
+    fun `updateStatus should not update when schedule does not exist`() = runTest {
+        val nonExistentId = UUID.randomUUID()
+        val newStatus = FlightStatus.CANCELLED
+
+        val updatedRows = scheduleRepository.updateStatus(nonExistentId, newStatus)
+
+        assertEquals(0, updatedRows)
+    }
+
+    @Test
+    fun `getAvailableSeats should return seat count when schedule exists`() = runTest {
+        val scheduleEntity = createScheduleEntity().copy(availableSeats = 150)
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+
+        val availableSeats = scheduleRepository.getAvailableSeats(savedEntity.id!!)
+
+        assertEquals(150, availableSeats)
+    }
+
+    @Test
+    fun `getAvailableSeats should return zero when schedule does not exist`() = runTest {
+        val nonExistentId = UUID.randomUUID()
+
+        val availableSeats = scheduleRepository.getAvailableSeats(nonExistentId)
+
+        assertEquals(0, availableSeats ?: 0)
+    }
+
+    @Test
+    fun `delete should remove schedule entity from database`() = runTest {
+        val scheduleEntity = createScheduleEntity()
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+
+        scheduleRepository.delete(savedEntity)
+        val foundEntity = scheduleRepository.findById(savedEntity.id!!)
+
+        assertNull(foundEntity)
+    }
+
+    @Test
+    fun `findAll should return all schedules including different statuses`() = runTest {
+        val scheduledFlight = createScheduleEntity().copy(status = FlightStatus.SCHEDULED)
+        val cancelledFlight = createScheduleEntity().copy(
+            flightNumber = "AI102", 
+            status = FlightStatus.CANCELLED
+        )
+        
+        scheduleRepository.save(scheduledFlight)
+        scheduleRepository.save(cancelledFlight)
+
+        val allSchedules = scheduleRepository.findAll().toList()
+
+        assertTrue(allSchedules.size >= 2)
+        assertTrue(allSchedules.any { it.status == FlightStatus.SCHEDULED })
+        assertTrue(allSchedules.any { it.status == FlightStatus.CANCELLED })
+    }
+
+    @Test
+    fun `save should update existing schedule when entity has id`() = runTest {
+        val scheduleEntity = createScheduleEntity()
+        val savedEntity = scheduleRepository.save(scheduleEntity)
+        
+        val updatedEntity = savedEntity.copy(
+            availableSeats = 200,
+            price = 5500.0,
+            status = FlightStatus.DELAYED
+        )
+
+        val result = scheduleRepository.save(updatedEntity)
+
+        assertEquals(savedEntity.id, result.id)
+        assertEquals(200, result.availableSeats)
+        assertEquals(5500.0, result.price)
+        assertEquals(FlightStatus.DELAYED, result.status)
+    }
+
+    private fun createScheduleEntity() = FlightScheduleEntity(
+        id = UUID.randomUUID(),
+        flightNumber = "AI101",
+        scheduleDate = LocalDateTime.of(2025, 9, 28, 6, 0),
+        departureDateTime = LocalDateTime.of(2025, 9, 28, 6, 0),
+        arrivalDateTime = LocalDateTime.of(2025, 9, 28, 8, 30),
+        availableSeats = 178,
+        price = 4500.0,
+        status = FlightStatus.SCHEDULED,
+        createdAt = LocalDateTime.now(),
+        updatedAt = LocalDateTime.now()
+    )
+}

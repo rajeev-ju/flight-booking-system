@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: booking-service
+  webflux:
+    base-path: /booking-system
+  
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/flight_management
+    username: postgres
+    password: admin
+    pool:
+      initial-size: 5
+      max-size: 20
+      max-idle-time: 30m
+      max-acquire-time: 5s
+      max-create-connection-time: 2s
+  
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 2000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+  
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 3
+
+server:
+  port: 8082
+  error:
+    include-message: always
+    include-binding-errors: always
+
+services:
+  flight-management:
+    url: http://localhost:8081/flight-management-service
+
+logging:
+  level:
+    com.airline.booking: DEBUG
+    org.springframework.r2dbc: DEBUG
+    io.r2dbc.postgresql: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always

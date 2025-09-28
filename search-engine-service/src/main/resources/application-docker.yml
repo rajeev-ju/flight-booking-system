@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: search-engine-service
+  
+  # Disable Kafka for now
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+  
+  # Elasticsearch configuration
+  elasticsearch:
+    uris: ${SPRING_ELASTICSEARCH_URIS:http://elasticsearch:9200}
+    username: ${ELASTICSEARCH_USERNAME:}
+    password: ${ELASTICSEARCH_PASSWORD:}
+  
+  # Redis configuration
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:redis}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  
+  # Kafka configuration
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:kafka:29092}
+    consumer:
+      group-id: search-engine-service
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+server:
+  port: 8080
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  health:
+    elasticsearch:
+      enabled: true
+    redis:
+      enabled: true
+
+# Services configuration
+services:
+  flight-management:
+    url: ${SERVICES_FLIGHT_MANAGEMENT_URL:http://localhost:8081/flight-management-service}
+
+# Application specific
+app:
+  elasticsearch:
+    index:
+      flight-routes: flight-routes-v1
+  redis:
+    enabled: true
+    ttl-seconds: 300
+
+# Logging
+logging:
+  level:
+    com.airline: INFO
+    org.springframework.data.elasticsearch: WARN
+    org.springframework.data.redis: WARN
+    org.springframework.kafka: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: database-migrations
+  
+  # Database configuration
+  r2dbc:
+    url: ${DATASOURCE_URL:r2dbc:postgresql://localhost:5432/flight_management}
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:admin}
+    initialization-mode: ${DATA_INITIALIZATION_MODE:never}
+    hikari:
+      idle-timeout: ${DB_POOL_IDLE_TIMEOUT_IN_MS:30000}
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:2}
+      minimum-idle: ${DB_POOL_MIN_IDLE:1}
+    properties:
+      sslMode: ${DB_SSL_MODE:prefer}
+  
+  # Main application configuration
+  main:
+    web-application-type: NONE
+    
+  # Liquibase configuration
+  liquibase:
+    url: ${LIQUIBASE_DATASOURCE_URL:jdbc:postgresql://localhost:5432/flight_management}
+    user: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:admin}
+    change-log: classpath:db/liquibase-changelog.yaml
+    
+  # JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: none
+      
+  # Elasticsearch configuration
+  elasticsearch:
+    uris: ${ELASTICSEARCH_URIS:http://localhost:9200}
+    username: ${ELASTICSEARCH_USERNAME:}
+    password: ${ELASTICSEARCH_PASSWORD:}
+
+# Server configuration
+server:
+  port: ${SERVER_PORT:8082}
+
+# Migration specific configuration
+migration:
+  postgresql:
+    enabled: ${POSTGRESQL_MIGRATION_ENABLED:true}
+    validate-only: ${POSTGRESQL_VALIDATE_ONLY:false}
+  
+  elasticsearch:
+    enabled: ${ELASTICSEARCH_MIGRATION_ENABLED:true}
+    recreate-indices: ${ELASTICSEARCH_RECREATE_INDICES:false}
+    indices:
+      flight-routes: flight-routes-v1
+      
+  sample-data:
+    enabled: ${SAMPLE_DATA_ENABLED:true}
+
+# Logging configuration
+logging:
+  level:
+    com.airline.migration: INFO
+    org.flywaydb: INFO
+    org.springframework.data.elasticsearch: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="add-unique-constraint-flight-number" author="flight-booking-system">
+        <comment>Add unique constraint to flight_number in flights table to ensure data integrity</comment>
+        
+        <!-- Drop the existing non-unique index first -->
+        <dropIndex tableName="flights" indexName="idx_flights_number"/>
+        
+        <!-- Add unique constraint on flight_number -->
+        <addUniqueConstraint 
+            tableName="flights" 
+            columnNames="flight_number"
+            constraintName="uk_flights_flight_number"/>
+            
+        <!-- Create a new index that is unique -->
+        <createIndex tableName="flights" indexName="idx_flights_number_unique" unique="true">
+            <column name="flight_number"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

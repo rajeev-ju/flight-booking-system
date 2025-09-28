@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="create-flight-schedules-table" author="flight-booking-system">
+        <comment>Create flight_schedules table for flight schedule management</comment>
+        
+        <createTable tableName="flight_schedules">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="flight_number" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="schedule_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departure_date_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="arrival_date_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="available_seats" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(20)" defaultValue="SCHEDULED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Add check constraints -->
+        <sql>
+            ALTER TABLE flight_schedules 
+            ADD CONSTRAINT chk_schedule_available_seats_positive CHECK (available_seats >= 0);
+            
+            ALTER TABLE flight_schedules 
+            ADD CONSTRAINT chk_schedule_price_positive CHECK (price > 0);
+            
+            ALTER TABLE flight_schedules 
+            ADD CONSTRAINT chk_schedule_arrival_after_departure CHECK (arrival_date_time > departure_date_time);
+            
+            ALTER TABLE flight_schedules 
+            ADD CONSTRAINT chk_schedule_status CHECK (status IN ('SCHEDULED', 'BOARDING', 'DEPARTED', 'ARRIVED', 'CANCELLED', 'DELAYED'));
+        </sql>
+
+        <!-- Create indexes for performance -->
+        <createIndex tableName="flight_schedules" indexName="idx_flight_schedules_flight_number">
+            <column name="flight_number"/>
+        </createIndex>
+        
+        <createIndex tableName="flight_schedules" indexName="idx_flight_schedules_date">
+            <column name="schedule_date"/>
+        </createIndex>
+        
+        <createIndex tableName="flight_schedules" indexName="idx_flight_schedules_departure">
+            <column name="departure_date_time"/>
+        </createIndex>
+        
+        <createIndex tableName="flight_schedules" indexName="idx_flight_schedules_status">
+            <column name="status"/>
+        </createIndex>
+        
+        <createIndex tableName="flight_schedules" indexName="idx_flight_schedules_available_seats">
+            <column name="available_seats"/>
+        </createIndex>
+
+        <!-- Composite index for common search patterns -->
+        <createIndex tableName="flight_schedules" indexName="idx_flight_schedules_search">
+            <column name="schedule_date"/>
+            <column name="status"/>
+            <column name="available_seats"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

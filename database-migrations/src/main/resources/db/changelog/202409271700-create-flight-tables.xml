@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+
+<!-- Create airports table -->
+    <changeSet id="create-airports-table" author="flight-booking-system">
+        <comment>Create airports table to store airport information</comment>
+        
+        <createTable tableName="airports">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(3)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timezone" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="airports" indexName="idx_airports_code">
+            <column name="code"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- Create airlines table -->
+    <changeSet id="create-airlines-table" author="flight-booking-system">
+        <comment>Create airlines table to store airline information</comment>
+        
+        <createTable tableName="airlines">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(3)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="airlines" indexName="idx_airlines_code">
+            <column name="code"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- Create routes table -->
+    <changeSet id="create-routes-table" author="flight-booking-system">
+        <comment>Create routes table to store flight routes</comment>
+        
+        <createTable tableName="routes">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="origin_airport_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="destination_airport_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="airline_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distance_km" type="INTEGER"/>
+            <column name="base_price" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="routes"
+            baseColumnNames="origin_airport_id"
+            referencedTableName="airports"
+            referencedColumnNames="id"
+            constraintName="fk_routes_origin_airport"/>
+
+        <addForeignKeyConstraint
+            baseTableName="routes"
+            baseColumnNames="destination_airport_id"
+            referencedTableName="airports"
+            referencedColumnNames="id"
+            constraintName="fk_routes_destination_airport"/>
+
+        <addForeignKeyConstraint
+            baseTableName="routes"
+            baseColumnNames="airline_id"
+            referencedTableName="airlines"
+            referencedColumnNames="id"
+            constraintName="fk_routes_airline"/>
+
+        <createIndex tableName="routes" indexName="idx_routes_origin_destination">
+            <column name="origin_airport_id"/>
+            <column name="destination_airport_id"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- Create flights table -->
+    <changeSet id="create-flights-table" author="flight-booking-system">
+        <comment>Create flights table to store flight schedules</comment>
+        
+        <createTable tableName="flights">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="route_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="flight_number" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departure_time" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="arrival_time" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration_minutes" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aircraft_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_seats" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="available_seats" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="flights"
+            baseColumnNames="route_id"
+            referencedTableName="routes"
+            referencedColumnNames="id"
+            constraintName="fk_flights_route"/>
+
+        <createIndex tableName="flights" indexName="idx_flights_route_departure">
+            <column name="route_id"/>
+            <column name="departure_time"/>
+        </createIndex>
+
+        <createIndex tableName="flights" indexName="idx_flights_number">
+            <column name="flight_number"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

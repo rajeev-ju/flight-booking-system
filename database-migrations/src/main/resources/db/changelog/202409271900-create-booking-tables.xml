@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- Create bookings table -->
+    <changeSet id="create-bookings-table" author="booking-service">
+        <comment>Create bookings table to store flight booking information</comment>
+
+        <createTable tableName="bookings">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="pnr" type="VARCHAR(10)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="flight_schedule_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="flight_number" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_phone" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_passengers" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_amount" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="booking_status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_reason" type="VARCHAR(255)"/>
+            <column name="booking_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departure_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="origin" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="destination" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Create indexes for bookings table -->
+        <createIndex tableName="bookings" indexName="idx_bookings_pnr">
+            <column name="pnr"/>
+        </createIndex>
+
+        <createIndex tableName="bookings" indexName="idx_bookings_user_email">
+            <column name="user_email"/>
+        </createIndex>
+
+        <createIndex tableName="bookings" indexName="idx_bookings_flight_schedule">
+            <column name="flight_schedule_id"/>
+        </createIndex>
+
+        <createIndex tableName="bookings" indexName="idx_bookings_status">
+            <column name="booking_status"/>
+        </createIndex>
+
+        <createIndex tableName="bookings" indexName="idx_bookings_departure_date">
+            <column name="departure_date"/>
+        </createIndex>
+
+        <!-- Composite indexes for common query patterns -->
+        <createIndex tableName="bookings" indexName="idx_bookings_status_updated">
+            <column name="booking_status"/>
+            <column name="updated_at"/>
+        </createIndex>
+
+        <createIndex tableName="bookings" indexName="idx_bookings_email_date">
+            <column name="user_email"/>
+            <column name="booking_date" descending="true"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- Create passengers table -->
+    <changeSet id="create-passengers-table" author="booking-service">
+        <comment>Create passengers table to store passenger details for each booking</comment>
+
+        <createTable tableName="passengers">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="booking_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_number" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seat_number" type="VARCHAR(5)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Add foreign key constraint -->
+        <addForeignKeyConstraint
+                baseTableName="passengers"
+                baseColumnNames="booking_id"
+                referencedTableName="bookings"
+                referencedColumnNames="id"
+                constraintName="fk_passengers_booking_id"
+                onDelete="CASCADE"/>
+
+        <!-- Create index for passengers table -->
+        <createIndex tableName="passengers" indexName="idx_passengers_booking_id">
+            <column name="booking_id"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- Add check constraints -->
+    <changeSet id="add-booking-constraints" author="booking-service">
+        <comment>Add check constraints for data validation</comment>
+
+        <!-- Bookings table constraints -->
+        <sql>
+            ALTER TABLE bookings
+            ADD CONSTRAINT chk_booking_status
+            CHECK (booking_status IN ('INITIATED', 'PAYMENT_PENDING', 'PAYMENT_CONFIRMED', 'CONFIRMED', 'PAYMENT_FAILED', 'FAILED', 'CANCELLED'));
+        </sql>
+
+        <sql>
+            ALTER TABLE bookings
+            ADD CONSTRAINT chk_total_passengers
+            CHECK (total_passengers BETWEEN 1 AND 9);
+        </sql>
+
+        <sql>
+            ALTER TABLE bookings
+            ADD CONSTRAINT chk_total_amount
+            CHECK (total_amount > 0);
+        </sql>
+
+        <sql>
+            ALTER TABLE bookings
+            ADD CONSTRAINT chk_pnr_format
+            CHECK (pnr ~ '^[A-Z0-9]{6}$');
+        </sql>
+
+        <!-- Passengers table constraints -->
+        <sql>
+            ALTER TABLE passengers
+            ADD CONSTRAINT chk_gender
+            CHECK (gender IN ('MALE', 'FEMALE', 'OTHER'));
+        </sql>
+
+        <sql>
+            ALTER TABLE passengers
+            ADD CONSTRAINT chk_id_type
+            CHECK (id_type IN ('PASSPORT', 'AADHAR', 'DRIVING_LICENSE', 'PAN_CARD', 'VOTER_ID'));
+        </sql>
+
+        <sql>
+            ALTER TABLE passengers
+            ADD CONSTRAINT chk_age
+            CHECK (age BETWEEN 1 AND 120);
+        </sql>
+
+        <sql>
+            ALTER TABLE passengers
+            ADD CONSTRAINT chk_seat_format
+            CHECK (seat_number IS NULL OR seat_number ~ '^[0-9]{1,2}[A-F]$');
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

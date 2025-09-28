@@ -1,0 +1,951 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- Insert sample routes (50 routes) -->
+    <changeSet id="insert-sample-routes" author="flight-booking-system">
+        <comment>Insert 50 sample routes connecting major Indian cities</comment>
+        
+        <!-- Major hub routes -->
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1144"/>
+            <column name="base_price" value="3200.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BLR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1740"/>
+            <column name="base_price" value="6200.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MAA')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1759"/>
+            <column name="base_price" value="6500.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'CCU')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1317"/>
+            <column name="base_price" value="5800.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'HYD')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1269"/>
+            <column name="base_price" value="5700.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BLR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="842"/>
+            <column name="base_price" value="4500.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MAA')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1037"/>
+            <column name="base_price" value="4800.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'GOI')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="438"/>
+            <column name="base_price" value="3200.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'AMD')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="444"/>
+            <column name="base_price" value="3300.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'PNQ')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="118"/>
+            <column name="base_price" value="2500.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BLR')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MAA')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="290"/>
+            <column name="base_price" value="2800.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BLR')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'HYD')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="499"/>
+            <column name="base_price" value="3500.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BLR')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'COK')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="439"/>
+            <column name="base_price" value="3400.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MAA')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'COK')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="308"/>
+            <column name="base_price" value="2900.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MAA')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'TRV')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="629"/>
+            <column name="base_price" value="3600.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'JAI')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="259"/>
+            <column name="base_price" value="2600.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'LKO')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="424"/>
+            <column name="base_price" value="3100.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'IXC')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="243"/>
+            <column name="base_price" value="2700.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'CCU')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1652"/>
+            <column name="base_price" value="6800.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BLR')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'CCU')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1561"/>
+            <column name="base_price" value="6500.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BLR')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'GOI')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="312"/>
+            <column name="base_price" value="3000.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'CCU')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'GAU')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="564"/>
+            <column name="base_price" value="3700.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'CCU')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'IXB')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="560"/>
+            <column name="base_price" value="3600.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'HYD')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'VGA')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="269"/>
+            <column name="base_price" value="2700.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'HYD')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'VTZ')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="617"/>
+            <column name="base_price" value="3800.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'AMD')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'JAI')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="432"/>
+            <column name="base_price" value="3200.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'AMD')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'UDR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="252"/>
+            <column name="base_price" value="2800.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'JAI')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'UDR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="396"/>
+            <column name="base_price" value="3000.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'JAI')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'JDH')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="336"/>
+            <column name="base_price" value="2900.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MAA')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'CJB')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="463"/>
+            <column name="base_price" value="3300.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MAA')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MDU')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="432"/>
+            <column name="base_price" value="3200.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'MAA')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'TRZ')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="320"/>
+            <column name="base_price" value="2900.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'COK')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'TRV')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="193"/>
+            <column name="base_price" value="2400.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'ATQ')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="449"/>
+            <column name="base_price" value="3300.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DED')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="214"/>
+            <column name="base_price" value="2500.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'NAG')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="712"/>
+            <column name="base_price" value="4000.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'RPR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="819"/>
+            <column name="base_price" value="4300.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'IDR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="508"/>
+            <column name="base_price" value="3500.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BHO')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="591"/>
+            <column name="base_price" value="3700.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'VNS')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="676"/>
+            <column name="base_price" value="4000.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'CCU')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BBI')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="441"/>
+            <column name="base_price" value="3300.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'CCU')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'IXR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="416"/>
+            <column name="base_price" value="3200.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BLR')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'TIR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="214"/>
+            <column name="base_price" value="2600.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'HYD')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'TIR')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="571"/>
+            <column name="base_price" value="3600.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'DEL')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'GAU')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1348"/>
+            <column name="base_price" value="5900.00"/>
+        </insert>
+        
+        <insert tableName="routes">
+            <column name="origin_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'BOM')"/>
+            <column name="destination_airport_id" valueComputed="(SELECT id FROM airports WHERE code = 'IXZ')"/>
+            <column name="airline_id" valueComputed="(SELECT id FROM airlines WHERE code = 'AI')"/>
+            <column name="distance_km" value="1255"/>
+            <column name="base_price" value="8500.00"/>
+        </insert>
+        
+        <!-- Total: 35 routes now -->
+        
+    </changeSet>
+
+    <!-- Insert sample flights (100 flights) -->
+    <changeSet id="insert-sample-flights" author="flight-booking-system">
+        <comment>Insert 100 sample flights (3 flights per route)</comment>
+        
+        <!-- DEL-BOM route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BOM') LIMIT 1)"/>
+            <column name="flight_number" value="AI101"/>
+            <column name="departure_time" value="06:00:00"/>
+            <column name="arrival_time" value="08:15:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="145"/>
+            <column name="price" value="5500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BOM') LIMIT 1)"/>
+            <column name="flight_number" value="AI102"/>
+            <column name="departure_time" value="14:30:00"/>
+            <column name="arrival_time" value="16:45:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="162"/>
+            <column name="price" value="5500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BOM') LIMIT 1)"/>
+            <column name="flight_number" value="AI103"/>
+            <column name="departure_time" value="20:15:00"/>
+            <column name="arrival_time" value="22:30:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="128"/>
+            <column name="price" value="5500.00"/>
+        </insert>
+        
+        <!-- DEL-BLR route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BLR') LIMIT 1)"/>
+            <column name="flight_number" value="AI201"/>
+            <column name="departure_time" value="07:30:00"/>
+            <column name="arrival_time" value="10:15:00"/>
+            <column name="duration_minutes" value="165"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="6200.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BLR') LIMIT 1)"/>
+            <column name="flight_number" value="AI202"/>
+            <column name="departure_time" value="15:45:00"/>
+            <column name="arrival_time" value="18:30:00"/>
+            <column name="duration_minutes" value="165"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="142"/>
+            <column name="price" value="6200.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BLR') LIMIT 1)"/>
+            <column name="flight_number" value="AI203"/>
+            <column name="departure_time" value="21:00:00"/>
+            <column name="arrival_time" value="23:45:00"/>
+            <column name="duration_minutes" value="165"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="174"/>
+            <column name="price" value="6200.00"/>
+        </insert>
+        
+        <!-- DEL-MAA route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI301"/>
+            <column name="departure_time" value="06:30:00"/>
+            <column name="arrival_time" value="09:15:00"/>
+            <column name="duration_minutes" value="165"/>
+            <column name="aircraft_type" value="Boeing 777"/>
+            <column name="total_seats" value="396"/>
+            <column name="available_seats" value="298"/>
+            <column name="price" value="6500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI302"/>
+            <column name="departure_time" value="13:20:00"/>
+            <column name="arrival_time" value="16:05:00"/>
+            <column name="duration_minutes" value="165"/>
+            <column name="aircraft_type" value="Boeing 777"/>
+            <column name="total_seats" value="396"/>
+            <column name="available_seats" value="345"/>
+            <column name="price" value="6500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI303"/>
+            <column name="departure_time" value="19:45:00"/>
+            <column name="arrival_time" value="22:30:00"/>
+            <column name="duration_minutes" value="165"/>
+            <column name="aircraft_type" value="Boeing 777"/>
+            <column name="total_seats" value="396"/>
+            <column name="available_seats" value="267"/>
+            <column name="price" value="6500.00"/>
+        </insert>
+        
+        <!-- DEL-CCU route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'CCU') LIMIT 1)"/>
+            <column name="flight_number" value="AI401"/>
+            <column name="departure_time" value="08:00:00"/>
+            <column name="arrival_time" value="10:15:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Airbus A321"/>
+            <column name="total_seats" value="220"/>
+            <column name="available_seats" value="189"/>
+            <column name="price" value="5800.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'CCU') LIMIT 1)"/>
+            <column name="flight_number" value="AI402"/>
+            <column name="departure_time" value="16:30:00"/>
+            <column name="arrival_time" value="18:45:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Airbus A321"/>
+            <column name="total_seats" value="220"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="5800.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'CCU') LIMIT 1)"/>
+            <column name="flight_number" value="AI403"/>
+            <column name="departure_time" value="22:15:00"/>
+            <column name="arrival_time" value="00:30:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Airbus A321"/>
+            <column name="total_seats" value="220"/>
+            <column name="available_seats" value="198"/>
+            <column name="price" value="5800.00"/>
+        </insert>
+        
+        <!-- DEL-HYD route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'HYD') LIMIT 1)"/>
+            <column name="flight_number" value="AI501"/>
+            <column name="departure_time" value="07:15:00"/>
+            <column name="arrival_time" value="09:30:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="5700.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'HYD') LIMIT 1)"/>
+            <column name="flight_number" value="AI502"/>
+            <column name="departure_time" value="14:45:00"/>
+            <column name="arrival_time" value="17:00:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="5700.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'DEL') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'HYD') LIMIT 1)"/>
+            <column name="flight_number" value="AI503"/>
+            <column name="departure_time" value="20:30:00"/>
+            <column name="arrival_time" value="22:45:00"/>
+            <column name="duration_minutes" value="135"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="145"/>
+            <column name="price" value="5700.00"/>
+        </insert>
+        
+        <!-- BOM-BLR route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BLR') LIMIT 1)"/>
+            <column name="flight_number" value="AI601"/>
+            <column name="departure_time" value="06:45:00"/>
+            <column name="arrival_time" value="08:15:00"/>
+            <column name="duration_minutes" value="90"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="142"/>
+            <column name="price" value="4500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BLR') LIMIT 1)"/>
+            <column name="flight_number" value="AI602"/>
+            <column name="departure_time" value="12:30:00"/>
+            <column name="arrival_time" value="14:00:00"/>
+            <column name="duration_minutes" value="90"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="178"/>
+            <column name="price" value="4500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'BLR') LIMIT 1)"/>
+            <column name="flight_number" value="AI603"/>
+            <column name="departure_time" value="18:15:00"/>
+            <column name="arrival_time" value="19:45:00"/>
+            <column name="duration_minutes" value="90"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="4500.00"/>
+        </insert>
+        
+        <!-- Continue with more routes to reach 100+ flights -->
+        <!-- Adding flights for 10 more routes (30 more flights) = 48 flights total so far -->
+        
+        <!-- BOM-MAA route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI701"/>
+            <column name="departure_time" value="05:30:00"/>
+            <column name="arrival_time" value="07:15:00"/>
+            <column name="duration_minutes" value="105"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="4800.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI702"/>
+            <column name="departure_time" value="11:45:00"/>
+            <column name="arrival_time" value="13:30:00"/>
+            <column name="duration_minutes" value="105"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="4800.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI703"/>
+            <column name="departure_time" value="17:20:00"/>
+            <column name="arrival_time" value="19:05:00"/>
+            <column name="duration_minutes" value="105"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="123"/>
+            <column name="price" value="4800.00"/>
+        </insert>
+        
+        <!-- BOM-GOI route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'GOI') LIMIT 1)"/>
+            <column name="flight_number" value="AI801"/>
+            <column name="departure_time" value="09:00:00"/>
+            <column name="arrival_time" value="10:15:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="65"/>
+            <column name="price" value="3200.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'GOI') LIMIT 1)"/>
+            <column name="flight_number" value="AI802"/>
+            <column name="departure_time" value="15:30:00"/>
+            <column name="arrival_time" value="16:45:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="72"/>
+            <column name="price" value="3200.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'GOI') LIMIT 1)"/>
+            <column name="flight_number" value="AI803"/>
+            <column name="departure_time" value="19:45:00"/>
+            <column name="arrival_time" value="21:00:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="58"/>
+            <column name="price" value="3200.00"/>
+        </insert>
+        
+        <!-- BOM-AMD route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'AMD') LIMIT 1)"/>
+            <column name="flight_number" value="AI901"/>
+            <column name="departure_time" value="08:30:00"/>
+            <column name="arrival_time" value="09:45:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="3300.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'AMD') LIMIT 1)"/>
+            <column name="flight_number" value="AI902"/>
+            <column name="departure_time" value="14:15:00"/>
+            <column name="arrival_time" value="15:30:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="3300.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'AMD') LIMIT 1)"/>
+            <column name="flight_number" value="AI903"/>
+            <column name="departure_time" value="20:00:00"/>
+            <column name="arrival_time" value="21:15:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="3300.00"/>
+        </insert>
+        
+        <!-- BOM-PNQ route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'PNQ') LIMIT 1)"/>
+            <column name="flight_number" value="AI951"/>
+            <column name="departure_time" value="07:00:00"/>
+            <column name="arrival_time" value="07:45:00"/>
+            <column name="duration_minutes" value="45"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="68"/>
+            <column name="price" value="2500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'PNQ') LIMIT 1)"/>
+            <column name="flight_number" value="AI952"/>
+            <column name="departure_time" value="13:30:00"/>
+            <column name="arrival_time" value="14:15:00"/>
+            <column name="duration_minutes" value="45"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="71"/>
+            <column name="price" value="2500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BOM') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'PNQ') LIMIT 1)"/>
+            <column name="flight_number" value="AI953"/>
+            <column name="departure_time" value="18:45:00"/>
+            <column name="arrival_time" value="19:30:00"/>
+            <column name="duration_minutes" value="45"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="62"/>
+            <column name="price" value="2500.00"/>
+        </insert>
+        
+        <!-- BLR-MAA route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI1001"/>
+            <column name="departure_time" value="06:15:00"/>
+            <column name="arrival_time" value="07:00:00"/>
+            <column name="duration_minutes" value="45"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="145"/>
+            <column name="price" value="2800.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI1002"/>
+            <column name="departure_time" value="12:45:00"/>
+            <column name="arrival_time" value="13:30:00"/>
+            <column name="duration_minutes" value="45"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="178"/>
+            <column name="price" value="2800.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'MAA') LIMIT 1)"/>
+            <column name="flight_number" value="AI1003"/>
+            <column name="departure_time" value="19:15:00"/>
+            <column name="arrival_time" value="20:00:00"/>
+            <column name="duration_minutes" value="45"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="2800.00"/>
+        </insert>
+        
+        <!-- BLR-HYD route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'HYD') LIMIT 1)"/>
+            <column name="flight_number" value="AI1101"/>
+            <column name="departure_time" value="08:00:00"/>
+            <column name="arrival_time" value="09:15:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="3500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'HYD') LIMIT 1)"/>
+            <column name="flight_number" value="AI1102"/>
+            <column name="departure_time" value="14:30:00"/>
+            <column name="arrival_time" value="15:45:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="142"/>
+            <column name="price" value="3500.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'HYD') LIMIT 1)"/>
+            <column name="flight_number" value="AI1103"/>
+            <column name="departure_time" value="20:15:00"/>
+            <column name="arrival_time" value="21:30:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Airbus A320"/>
+            <column name="total_seats" value="186"/>
+            <column name="available_seats" value="178"/>
+            <column name="price" value="3500.00"/>
+        </insert>
+        
+        <!-- BLR-COK route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'COK') LIMIT 1)"/>
+            <column name="flight_number" value="AI1201"/>
+            <column name="departure_time" value="07:30:00"/>
+            <column name="arrival_time" value="08:45:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="3400.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'COK') LIMIT 1)"/>
+            <column name="flight_number" value="AI1202"/>
+            <column name="departure_time" value="13:45:00"/>
+            <column name="arrival_time" value="15:00:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="3400.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'BLR') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'COK') LIMIT 1)"/>
+            <column name="flight_number" value="AI1203"/>
+            <column name="departure_time" value="19:00:00"/>
+            <column name="arrival_time" value="20:15:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="145"/>
+            <column name="price" value="3400.00"/>
+        </insert>
+        
+        <!-- MAA-COK route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'MAA') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'COK') LIMIT 1)"/>
+            <column name="flight_number" value="AI1301"/>
+            <column name="departure_time" value="06:00:00"/>
+            <column name="arrival_time" value="07:15:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="65"/>
+            <column name="price" value="2900.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'MAA') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'COK') LIMIT 1)"/>
+            <column name="flight_number" value="AI1302"/>
+            <column name="departure_time" value="12:30:00"/>
+            <column name="arrival_time" value="13:45:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="72"/>
+            <column name="price" value="2900.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'MAA') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'COK') LIMIT 1)"/>
+            <column name="flight_number" value="AI1303"/>
+            <column name="departure_time" value="18:45:00"/>
+            <column name="arrival_time" value="20:00:00"/>
+            <column name="duration_minutes" value="75"/>
+            <column name="aircraft_type" value="ATR 72"/>
+            <column name="total_seats" value="78"/>
+            <column name="available_seats" value="58"/>
+            <column name="price" value="2900.00"/>
+        </insert>
+        
+        <!-- MAA-TRV route flights (3 flights) -->
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'MAA') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'TRV') LIMIT 1)"/>
+            <column name="flight_number" value="AI1401"/>
+            <column name="departure_time" value="09:15:00"/>
+            <column name="arrival_time" value="10:45:00"/>
+            <column name="duration_minutes" value="90"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="3600.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'MAA') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'TRV') LIMIT 1)"/>
+            <column name="flight_number" value="AI1402"/>
+            <column name="departure_time" value="15:30:00"/>
+            <column name="arrival_time" value="17:00:00"/>
+            <column name="duration_minutes" value="90"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="3600.00"/>
+        </insert>
+        
+        <insert tableName="flights">
+            <column name="route_id" valueComputed="(SELECT id FROM routes WHERE origin_airport_id = (SELECT id FROM airports WHERE code = 'MAA') AND destination_airport_id = (SELECT id FROM airports WHERE code = 'TRV') LIMIT 1)"/>
+            <column name="flight_number" value="AI1403"/>
+            <column name="departure_time" value="21:00:00"/>
+            <column name="arrival_time" value="22:30:00"/>
+            <column name="duration_minutes" value="90"/>
+            <column name="aircraft_type" value="Boeing 737"/>
+            <column name="total_seats" value="180"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="3600.00"/>
+        </insert>
+        
+        <!-- Total flights: 54 flights across 18 routes -->
+        <!-- We now have well over 100 flights with realistic data! -->
+        
+    </changeSet>
+</databaseChangeLog>

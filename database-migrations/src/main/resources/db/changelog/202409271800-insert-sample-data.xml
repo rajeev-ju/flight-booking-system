@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- Insert sample airports (50 major Indian airports) -->
+    <changeSet id="insert-sample-airports" author="flight-booking-system">
+        <comment>Insert sample airports data</comment>
+        
+        <insert tableName="airports">
+            <column name="code" value="DEL"/>
+            <column name="name" value="Indira Gandhi International Airport"/>
+            <column name="city" value="Delhi"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="BOM"/>
+            <column name="name" value="Chhatrapati Shivaji Maharaj International Airport"/>
+            <column name="city" value="Mumbai"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="BLR"/>
+            <column name="name" value="Kempegowda International Airport"/>
+            <column name="city" value="Bangalore"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="MAA"/>
+            <column name="name" value="Chennai International Airport"/>
+            <column name="city" value="Chennai"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="CCU"/>
+            <column name="name" value="Netaji Subhash Chandra Bose International Airport"/>
+            <column name="city" value="Kolkata"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="HYD"/>
+            <column name="name" value="Rajiv Gandhi International Airport"/>
+            <column name="city" value="Hyderabad"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="AMD"/>
+            <column name="name" value="Sardar Vallabhbhai Patel International Airport"/>
+            <column name="city" value="Ahmedabad"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="PNQ"/>
+            <column name="name" value="Pune Airport"/>
+            <column name="city" value="Pune"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="GOI"/>
+            <column name="name" value="Goa International Airport"/>
+            <column name="city" value="Goa"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="COK"/>
+            <column name="name" value="Cochin International Airport"/>
+            <column name="city" value="Kochi"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <!-- Add more airports to reach 50 -->
+        <insert tableName="airports">
+            <column name="code" value="JAI"/>
+            <column name="name" value="Jaipur International Airport"/>
+            <column name="city" value="Jaipur"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="LKO"/>
+            <column name="name" value="Chaudhary Charan Singh International Airport"/>
+            <column name="city" value="Lucknow"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IXC"/>
+            <column name="name" value="Chandigarh Airport"/>
+            <column name="city" value="Chandigarh"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="NAG"/>
+            <column name="name" value="Dr. Babasaheb Ambedkar International Airport"/>
+            <column name="city" value="Nagpur"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="VNS"/>
+            <column name="name" value="Lal Bahadur Shastri Airport"/>
+            <column name="city" value="Varanasi"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <!-- Continue with more airports to reach 50 total -->
+        <insert tableName="airports">
+            <column name="code" value="IXB"/>
+            <column name="name" value="Bagdogra Airport"/>
+            <column name="city" value="Siliguri"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="GAU"/>
+            <column name="name" value="Lokpriya Gopinath Bordoloi International Airport"/>
+            <column name="city" value="Guwahati"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IXR"/>
+            <column name="name" value="Birsa Munda Airport"/>
+            <column name="city" value="Ranchi"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="BBI"/>
+            <column name="name" value="Biju Patnaik International Airport"/>
+            <column name="city" value="Bhubaneswar"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="TRV"/>
+            <column name="name" value="Trivandrum International Airport"/>
+            <column name="city" value="Thiruvananthapuram"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <!-- Add 30 more airports to reach 50 total -->
+        <insert tableName="airports">
+            <column name="code" value="IXA"/>
+            <column name="name" value="Agartala Airport"/>
+            <column name="city" value="Agartala"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IXI"/>
+            <column name="name" value="Lilabari Airport"/>
+            <column name="city" value="North Lakhimpur"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IXS"/>
+            <column name="name" value="Kailashahar Airport"/>
+            <column name="city" value="Kailashahar"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IXU"/>
+            <column name="name" value="Aurangabad Airport"/>
+            <column name="city" value="Aurangabad"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IXZ"/>
+            <column name="name" value="Veer Savarkar International Airport"/>
+            <column name="city" value="Port Blair"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <!-- Continue adding more airports... -->
+        <insert tableName="airports">
+            <column name="code" value="SXR"/>
+            <column name="name" value="Sheikh ul-Alam International Airport"/>
+            <column name="city" value="Srinagar"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="LEH"/>
+            <column name="name" value="Kushok Bakula Rimpochee Airport"/>
+            <column name="city" value="Leh"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IXJ"/>
+            <column name="name" value="Jammu Airport"/>
+            <column name="city" value="Jammu"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="ATQ"/>
+            <column name="name" value="Sri Guru Ram Dass Jee International Airport"/>
+            <column name="city" value="Amritsar"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IXL"/>
+            <column name="name" value="Leh Kushok Bakula Rimpochee Airport"/>
+            <column name="city" value="Leh"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <!-- Add remaining airports to reach exactly 50 -->
+        <insert tableName="airports">
+            <column name="code" value="RPR"/>
+            <column name="name" value="Swami Vivekananda Airport"/>
+            <column name="city" value="Raipur"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="IDR"/>
+            <column name="name" value="Devi Ahilya Bai Holkar Airport"/>
+            <column name="city" value="Indore"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="GWL"/>
+            <column name="name" value="Gwalior Airport"/>
+            <column name="city" value="Gwalior"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="JLR"/>
+            <column name="name" value="Jabalpur Airport"/>
+            <column name="city" value="Jabalpur"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="BHO"/>
+            <column name="name" value="Raja Bhoj Airport"/>
+            <column name="city" value="Bhopal"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="UDR"/>
+            <column name="name" value="Maharana Pratap Airport"/>
+            <column name="city" value="Udaipur"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="JDH"/>
+            <column name="name" value="Jodhpur Airport"/>
+            <column name="city" value="Jodhpur"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="BKB"/>
+            <column name="name" value="Nal Airport"/>
+            <column name="city" value="Bikaner"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="KNU"/>
+            <column name="name" value="Kanpur Airport"/>
+            <column name="city" value="Kanpur"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="VGA"/>
+            <column name="name" value="Vijayawada Airport"/>
+            <column name="city" value="Vijayawada"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="VTZ"/>
+            <column name="name" value="Visakhapatnam Airport"/>
+            <column name="city" value="Visakhapatnam"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="TIR"/>
+            <column name="name" value="Tirupati Airport"/>
+            <column name="city" value="Tirupati"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="RJA"/>
+            <column name="name" value="Rajahmundry Airport"/>
+            <column name="city" value="Rajahmundry"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="CJB"/>
+            <column name="name" value="Coimbatore International Airport"/>
+            <column name="city" value="Coimbatore"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="MDU"/>
+            <column name="name" value="Madurai Airport"/>
+            <column name="city" value="Madurai"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="TRZ"/>
+            <column name="name" value="Tiruchirappalli International Airport"/>
+            <column name="city" value="Tiruchirappalli"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="SLV"/>
+            <column name="name" value="Shimla Airport"/>
+            <column name="city" value="Shimla"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="KUU"/>
+            <column name="name" value="Kullu Manali Airport"/>
+            <column name="city" value="Kullu"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="DHM"/>
+            <column name="name" value="Gaggal Airport"/>
+            <column name="city" value="Dharamshala"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="DED"/>
+            <column name="name" value="Jolly Grant Airport"/>
+            <column name="city" value="Dehradun"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+        
+        <insert tableName="airports">
+            <column name="code" value="PGH"/>
+            <column name="name" value="Pantnagar Airport"/>
+            <column name="city" value="Pantnagar"/>
+            <column name="country" value="India"/>
+            <column name="timezone" value="Asia/Kolkata"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert single airline -->
+    <changeSet id="insert-sample-airlines" author="flight-booking-system">
+        <comment>Insert single airline data</comment>
+        
+        <insert tableName="airlines">
+            <column name="code" value="AI"/>
+            <column name="name" value="Air India"/>
+            <column name="country" value="India"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

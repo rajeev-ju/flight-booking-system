@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="insert-flight-schedules-sample-data" author="flight-booking-system">
+        <comment>Insert sample flight schedules for the next 7 days</comment>
+        
+        <!-- Generate schedules for DEL-BOM route (AI101, AI102, AI103) for next 7 days -->
+        
+        <!-- Day 1: 2025-09-28 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value = "AI101"/>
+            <column name="schedule_date" value="2025-09-28 06:00:00"/>
+            <column name="departure_date_time" value="2025-09-28 06:00:00"/>
+            <column name="arrival_date_time" value="2025-09-28 08:30:00"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value = "AI102"/>
+            <column name="schedule_date" value="2025-09-28 12:30:00"/>
+            <column name="departure_date_time" value="2025-09-28 12:30:00"/>
+            <column name="arrival_date_time" value="2025-09-28 15:00:00"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI103"/>
+            <column name="schedule_date" value="2025-09-28 18:45:00"/>
+            <column name="departure_date_time" value="2025-09-28 18:45:00"/>
+            <column name="arrival_date_time" value="2025-09-28 21:15:00"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- Day 2: 2025-09-29 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI101"/>
+            <column name="schedule_date" value="2025-09-29 06:00:00"/>
+            <column name="departure_date_time" value="2025-09-29 06:00:00"/>
+            <column name="arrival_date_time" value="2025-09-29 08:30:00"/>
+            <column name="available_seats" value="178"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI102"/>
+            <column name="schedule_date" value="2025-09-29 12:30:00"/>
+            <column name="departure_date_time" value="2025-09-29 12:30:00"/>
+            <column name="arrival_date_time" value="2025-09-29 15:00:00"/>
+            <column name="available_seats" value="145"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI103"/>
+            <column name="schedule_date" value="2025-09-29 18:45:00"/>
+            <column name="departure_date_time" value="2025-09-29 18:45:00"/>
+            <column name="arrival_date_time" value="2025-09-29 21:15:00"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- Day 3: 2025-09-30 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI101"/>
+            <column name="schedule_date" value="2025-09-30 06:00:00"/>
+            <column name="departure_date_time" value="2025-09-30 06:00:00"/>
+            <column name="arrival_date_time" value="2025-09-30 08:30:00"/>
+            <column name="available_seats" value="162"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI102"/>
+            <column name="schedule_date" value="2025-09-30 12:30:00"/>
+            <column name="departure_date_time" value="2025-09-30 12:30:00"/>
+            <column name="arrival_date_time" value="2025-09-30 15:00:00"/>
+            <column name="available_seats" value="189"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI103"/>
+            <column name="schedule_date" value="2025-09-30 18:45:00"/>
+            <column name="departure_date_time" value="2025-09-30 18:45:00"/>
+            <column name="arrival_date_time" value="2025-09-30 21:15:00"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- BLR-MAA route schedules (AI201, AI202, AI203) for 2025-09-28 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI201"/>
+            <column name="schedule_date" value="2025-09-28 07:15:00"/>
+            <column name="departure_date_time" value="2025-09-28 07:15:00"/>
+            <column name="arrival_date_time" value="2025-09-28 08:30:00"/>
+            <column name="available_seats" value="145"/>
+            <column name="price" value="3200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI202"/>
+            <column name="schedule_date" value="2025-09-28 13:30:00"/>
+            <column name="departure_date_time" value="2025-09-28 13:30:00"/>
+            <column name="arrival_date_time" value="2025-09-28 14:45:00"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="3200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI203"/>
+            <column name="schedule_date" value="2025-09-28 19:00:00"/>
+            <column name="departure_date_time" value="2025-09-28 19:00:00"/>
+            <column name="arrival_date_time" value="2025-09-28 20:15:00"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="3200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- MAA-CCU route schedules (AI301, AI302, AI303) for 2025-09-28 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI301"/>
+            <column name="schedule_date" value="2025-09-28 08:00:00"/>
+            <column name="departure_date_time" value="2025-09-28 08:00:00"/>
+            <column name="arrival_date_time" value="2025-09-28 10:30:00"/>
+            <column name="available_seats" value="178"/>
+            <column name="price" value="5200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI302"/>
+            <column name="schedule_date" value="2025-09-28 14:15:00"/>
+            <column name="departure_date_time" value="2025-09-28 14:15:00"/>
+            <column name="arrival_date_time" value="2025-09-28 16:45:00"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="5200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI303"/>
+            <column name="schedule_date" value="2025-09-28 20:30:00"/>
+            <column name="departure_date_time" value="2025-09-28 20:30:00"/>
+            <column name="arrival_date_time" value="2025-09-28 23:00:00"/>
+            <column name="available_seats" value="189"/>
+            <column name="price" value="5200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- BOM-BLR route schedules (AI601, AI602, AI603) for 2025-09-28 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI601"/>
+            <column name="schedule_date" value="2025-09-28 09:30:00"/>
+            <column name="departure_date_time" value="2025-09-28 09:30:00"/>
+            <column name="arrival_date_time" value="2025-09-28 11:00:00"/>
+            <column name="available_seats" value="145"/>
+            <column name="price" value="4200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI602"/>
+            <column name="schedule_date" value="2025-09-28 15:45:00"/>
+            <column name="departure_date_time" value="2025-09-28 15:45:00"/>
+            <column name="arrival_date_time" value="2025-09-28 17:15:00"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="4200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI603"/>
+            <column name="schedule_date" value="2025-09-28 21:00:00"/>
+            <column name="departure_date_time" value="2025-09-28 21:00:00"/>
+            <column name="arrival_date_time" value="2025-09-28 22:30:00"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="4200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- Add more schedules for other popular routes -->
+        
+        <!-- DEL-BLR route schedules (AI401, AI402, AI403) for 2025-09-28 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI401"/>
+            <column name="schedule_date" value="2025-09-28 06:30:00"/>
+            <column name="departure_date_time" value="2025-09-28 06:30:00"/>
+            <column name="arrival_date_time" value="2025-09-28 09:00:00"/>
+            <column name="available_seats" value="178"/>
+            <column name="price" value="5800.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI402"/>
+            <column name="schedule_date" value="2025-09-28 12:45:00"/>
+            <column name="departure_date_time" value="2025-09-28 12:45:00"/>
+            <column name="arrival_date_time" value="2025-09-28 15:15:00"/>
+            <column name="available_seats" value="145"/>
+            <column name="price" value="5800.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI403"/>
+            <column name="schedule_date" value="2025-09-28 19:30:00"/>
+            <column name="departure_date_time" value="2025-09-28 19:30:00"/>
+            <column name="arrival_date_time" value="2025-09-28 22:00:00"/>
+            <column name="available_seats" value="189"/>
+            <column name="price" value="5800.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- BOM-MAA route schedules (AI501, AI502, AI503) for 2025-09-28 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI501"/>
+            <column name="schedule_date" value="2025-09-28 07:00:00"/>
+            <column name="departure_date_time" value="2025-09-28 07:00:00"/>
+            <column name="arrival_date_time" value="2025-09-28 09:00:00"/>
+            <column name="available_seats" value="156"/>
+            <column name="price" value="4800.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI502"/>
+            <column name="schedule_date" value="2025-09-28 13:15:00"/>
+            <column name="departure_date_time" value="2025-09-28 13:15:00"/>
+            <column name="arrival_date_time" value="2025-09-28 15:15:00"/>
+            <column name="available_seats" value="167"/>
+            <column name="price" value="4800.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI503"/>
+            <column name="schedule_date" value="2025-09-28 18:30:00"/>
+            <column name="departure_date_time" value="2025-09-28 18:30:00"/>
+            <column name="arrival_date_time" value="2025-09-28 20:30:00"/>
+            <column name="available_seats" value="134"/>
+            <column name="price" value="4800.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- Add schedules for next day (2025-09-29) for some routes -->
+        
+        <!-- DEL-BOM route for 2025-09-29 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI101"/>
+            <column name="schedule_date" value="2025-09-29 06:00:00"/>
+            <column name="departure_date_time" value="2025-09-29 06:00:00"/>
+            <column name="arrival_date_time" value="2025-09-29 08:30:00"/>
+            <column name="available_seats" value="189"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- BLR-MAA route for 2025-09-29 -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI201"/>
+            <column name="schedule_date" value="2025-09-29 07:15:00"/>
+            <column name="departure_date_time" value="2025-09-29 07:15:00"/>
+            <column name="arrival_date_time" value="2025-09-29 08:30:00"/>
+            <column name="available_seats" value="178"/>
+            <column name="price" value="3200.00"/>
+            <column name="status" value="SCHEDULED"/>
+        </insert>
+        
+        <!-- Add some schedules with different statuses for testing -->
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value = "AI102"/>
+            <column name="schedule_date" value="2025-09-27 12:30:00"/>
+            <column name="departure_date_time" value="2025-09-27 12:30:00"/>
+            <column name="arrival_date_time" value="2025-09-27 15:00:00"/>
+            <column name="available_seats" value="0"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="DEPARTED"/>
+        </insert>
+        
+        <insert tableName="flight_schedules">
+            <column name="flight_number" value="AI103"/>
+            <column name="schedule_date" value="2025-09-27 18:45:00"/>
+            <column name="departure_date_time" value="2025-09-27 18:45:00"/>
+            <column name="arrival_date_time" value="2025-09-27 21:15:00"/>
+            <column name="available_seats" value="0"/>
+            <column name="price" value="4500.00"/>
+            <column name="status" value="ARRIVED"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

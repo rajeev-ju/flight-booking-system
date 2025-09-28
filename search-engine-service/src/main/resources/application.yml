@@ -1,0 +1,62 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: search-engine-service
+  webflux:
+    base-path: /search-engine-service
+  
+  # Elasticsearch Configuration
+  elasticsearch:
+    uris: http://localhost:9200
+    connection-timeout: 10s
+    socket-timeout: 60s
+  
+  # Redis Configuration
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: search-engine-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+# Custom Configuration
+elasticsearch:
+  host: localhost
+  port: 9200
+
+services:
+  flight-management:
+    url: http://localhost:8081/flight-management-service
+
+# Logging Configuration
+logging:
+  level:
+    com.airline.search: DEBUG
+    org.springframework.data.elasticsearch: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Management Endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always

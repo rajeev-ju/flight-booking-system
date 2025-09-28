@@ -1,0 +1,173 @@
+// Flight Booking System Database Schema
+// Use this at https://dbdiagram.io/
+
+Project FlightBookingSystem {
+  database_type: 'PostgreSQL'
+  Note: '''
+    High-performance flight booking system with real-time seat management
+    
+    Core Entities (7 tables):
+    - Airlines, Airports, Routes: Flight network structure
+    - Flights, FlightSchedules: Flight operations
+    - Bookings, Passengers: Customer transactions
+    
+    Design Decisions:
+    - All tables use UUID for distributed system compatibility
+    - Unique constraints on business keys (airline/airport codes, flight numbers, PNR)
+    - Composite indexes for search performance
+    - Monthly partitioning for schedules and bookings
+    
+    External Components:
+    - Redis: Temporary seat blocking with 5-minute TTL
+    - Kafka: Event-driven seat availability updates
+    - Elasticsearch: Fast flight search capabilities
+  '''
+}
+
+// ==================== TABLES ====================
+
+Table airlines {
+  id uuid [pk, note: 'Primary key']
+  code varchar(3) [unique, not null, note: 'IATA code e.g. AI']
+  name varchar(100) [not null]
+  country varchar(50)
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Indexes {
+    code [unique]
+  }
+}
+
+Table airports {
+  id uuid [pk]
+  code varchar(3) [unique, not null, note: 'IATA code e.g. DEL']
+  name varchar(100) [not null]
+  city varchar(50) [not null]
+  state varchar(50)
+  country varchar(50) [not null]
+  timezone varchar(50)
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Indexes {
+    code [unique]
+  }
+}
+
+Table routes {
+  id uuid [pk]
+  origin_airport_id uuid [not null, ref: > airports.id]
+  destination_airport_id uuid [not null, ref: > airports.id]
+  airline_id uuid [not null, ref: > airlines.id]
+  distance_km integer
+  base_price decimal(10,2) [not null]
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Indexes {
+    (origin_airport_id, destination_airport_id) [name: 'idx_routes_origin_dest']
+  }
+}
+
+Table flights {
+  id uuid [pk]
+  flight_number varchar(10) [unique, not null, note: 'e.g. AI101']
+  route_id uuid [not null, ref: > routes.id]
+  departure_time time [not null]
+  arrival_time time [not null]
+  duration_minutes integer [not null]
+  aircraft_type varchar(50)
+  total_seats integer [not null]
+  available_seats integer [not null]
+  price decimal(10,2) [not null]
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Indexes {
+    flight_number [unique, name: 'uk_flights_flight_number']
+    (route_id, departure_time) [name: 'idx_flights_route_departure']
+  }
+}
+
+Table flight_schedules {
+  id uuid [pk]
+  flight_number varchar(20) [not null, ref: > flights.flight_number]
+  schedule_date timestamp [not null]
+  departure_date_time timestamp [not null]
+  arrival_date_time timestamp [not null]
+  available_seats integer [not null]
+  price decimal(10,2) [not null]
+  status varchar(20) [default: 'SCHEDULED', note: 'SCHEDULED/DEPARTED/ARRIVED/CANCELLED']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Indexes {
+    flight_number [name: 'idx_flight_schedules_flight_number']
+    departure_date_time [name: 'idx_flight_schedules_departure']
+    available_seats [name: 'idx_flight_schedules_available_seats']
+    (schedule_date, status, available_seats) [name: 'idx_flight_schedules_search']
+  }
+  
+  Note: 'Partitioned by schedule_date (monthly)'
+}
+
+Table bookings {
+  id uuid [pk]
+  pnr varchar(6) [unique, not null, note: '6-character unique code']
+  flight_schedule_id uuid [not null, ref: > flight_schedules.id]
+  booking_date timestamp [not null, default: `now()`]
+  total_amount decimal(10,2) [not null]
+  status varchar(20) [default: 'PENDING', note: 'PENDING/CONFIRMED/CANCELLED']
+  payment_status varchar(20) [default: 'PENDING']
+  contact_email varchar(100) [not null]
+  contact_phone varchar(20) [not null]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Indexes {
+    pnr [unique, name: 'uk_bookings_pnr']
+    flight_schedule_id [name: 'idx_bookings_flight_schedule']
+    booking_date [name: 'idx_bookings_date']
+    status [name: 'idx_bookings_status']
+  }
+  
+  Note: 'Partitioned by booking_date (monthly)'
+}
+
+Table passengers {
+  id uuid [pk]
+  booking_id uuid [not null, ref: > bookings.id]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+  age integer [not null]
+  gender varchar(10)
+  id_type varchar(20) [not null]
+  id_number varchar(50) [not null]
+  seat_number varchar(5)
+  created_at timestamp [default: `now()`]
+  
+  Indexes {
+    booking_id [name: 'idx_passengers_booking']
+  }
+}
+
+// ==================== ADDITIONAL NOTES ====================
+// 
+// All relationships are already defined inline within the table definitions
+// using the ref: syntax in the column definitions.
+//
+// Key Relationships Summary:
+// - Airlines operate multiple routes
+// - Airports are connected by routes (origin and destination)
+// - Routes have multiple flights
+// - Flights have multiple schedules
+// - Schedules have multiple bookings
+// - Bookings have multiple passengers
+//
+// Additional Components (Not in Database):
+// - Seat blocks are stored in Redis with TTL for temporary reservations
+// - Payment processing is handled externally (simulated in the system)

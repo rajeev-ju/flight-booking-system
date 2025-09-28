@@ -1,0 +1,61 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: flight-management-service
+  webflux:
+    base-path: /flight-management-service
+  
+  # Database Configuration
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/flight_management
+    username: postgres
+    password: admin
+    pool:
+      initial-size: 10
+      max-size: 20
+      max-idle-time: 30m
+      validation-query: SELECT 1
+  
+  # Flyway Configuration (DISABLED - using Liquibase in database-migrations service)
+  flyway:
+    enabled: false
+  
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: flight-management-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+# Logging Configuration
+logging:
+  level:
+    com.airline.flight: DEBUG
+    org.springframework.r2dbc: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Management Endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# Custom Configuration
+flight:
+  schedule:
+    # Generate schedules for next N days
+    advance-days: 90
+    # Default flight frequency per route per day
+    default-frequency: 3

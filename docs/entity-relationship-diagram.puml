@@ -1,0 +1,198 @@
+@startuml Flight_Booking_System_ERD
+!define TABLE(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define PRIMARY_KEY(x) <u>x</u>
+!define FOREIGN_KEY(x) <i>x</i>
+
+skinparam class {
+    BackgroundColor<<TABLE>> LightYellow
+    BorderColor<<TABLE>> Black
+    ArrowColor Black
+}
+
+title Flight Booking System - Entity Relationship Diagram
+
+' ============ ENTITIES ============
+
+TABLE(airlines, "airlines") {
+    PRIMARY_KEY(id): UUID
+    --
+    code: VARCHAR(3) <<UNIQUE>>
+    name: VARCHAR(100)
+    country: VARCHAR(50)
+    is_active: BOOLEAN
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+TABLE(airports, "airports") {
+    PRIMARY_KEY(id): UUID
+    --
+    code: VARCHAR(3) <<UNIQUE>>
+    name: VARCHAR(100)
+    city: VARCHAR(50)
+    state: VARCHAR(50)
+    country: VARCHAR(50)
+    timezone: VARCHAR(50)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+TABLE(routes, "routes") {
+    PRIMARY_KEY(id): UUID
+    --
+    FOREIGN_KEY(origin_airport_id): UUID
+    FOREIGN_KEY(destination_airport_id): UUID
+    FOREIGN_KEY(airline_id): UUID
+    distance_km: INTEGER
+    base_price: DECIMAL(10,2)
+    is_active: BOOLEAN
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+TABLE(flights, "flights") {
+    PRIMARY_KEY(id): UUID
+    --
+    flight_number: VARCHAR(10) <<UNIQUE>>
+    FOREIGN_KEY(route_id): UUID
+    departure_time: TIME
+    arrival_time: TIME
+    duration_minutes: INTEGER
+    aircraft_type: VARCHAR(50)
+    total_seats: INTEGER
+    available_seats: INTEGER
+    price: DECIMAL(10,2)
+    is_active: BOOLEAN
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+TABLE(flight_schedules, "flight_schedules") {
+    PRIMARY_KEY(id): UUID
+    --
+    flight_number: VARCHAR(20)
+    schedule_date: TIMESTAMP
+    departure_date_time: TIMESTAMP
+    arrival_date_time: TIMESTAMP
+    available_seats: INTEGER
+    price: DECIMAL(10,2)
+    status: VARCHAR(20)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+    --
+    Indexes:
+    - idx_flight_number
+    - idx_departure_date_time
+    - idx_available_seats
+    - idx_schedule_date_status_seats
+}
+
+TABLE(bookings, "bookings") {
+    PRIMARY_KEY(id): UUID
+    --
+    pnr: VARCHAR(6) <<UNIQUE>>
+    FOREIGN_KEY(flight_schedule_id): UUID
+    booking_date: TIMESTAMP
+    total_amount: DECIMAL(10,2)
+    status: VARCHAR(20)
+    payment_status: VARCHAR(20)
+    contact_email: VARCHAR(100)
+    contact_phone: VARCHAR(20)
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+    --
+    Indexes:
+    - uk_pnr (UNIQUE)
+    - idx_flight_schedule_id
+    - idx_booking_date
+    - idx_status
+}
+
+TABLE(passengers, "passengers") {
+    PRIMARY_KEY(id): UUID
+    --
+    FOREIGN_KEY(booking_id): UUID
+    first_name: VARCHAR(50)
+    last_name: VARCHAR(50)
+    age: INTEGER
+    gender: VARCHAR(10)
+    id_type: VARCHAR(20)
+    id_number: VARCHAR(50)
+    seat_number: VARCHAR(5)
+    created_at: TIMESTAMP
+    --
+    Indexes:
+    - idx_booking_id
+}
+
+TABLE(seat_blocks, "seat_blocks") {
+    PRIMARY_KEY(id): UUID
+    --
+    FOREIGN_KEY(flight_schedule_id): UUID
+    session_id: VARCHAR(100)
+    seats_blocked: INTEGER
+    block_expiry: TIMESTAMP
+    status: VARCHAR(20)
+    created_at: TIMESTAMP
+    --
+    Note: Redis TTL-based
+    --
+    Indexes:
+    - idx_schedule_session
+    - idx_expiry
+}
+
+TABLE(payment_transactions, "payment_transactions") {
+    PRIMARY_KEY(id): UUID
+    --
+    FOREIGN_KEY(booking_id): UUID
+    transaction_id: VARCHAR(100)
+    payment_method: VARCHAR(20)
+    amount: DECIMAL(10,2)
+    currency: VARCHAR(3)
+    status: VARCHAR(20)
+    gateway_response: JSONB
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+}
+
+' ============ RELATIONSHIPS ============
+
+airlines ||--o{ routes : "operates"
+airports ||--o{ routes : "origin"
+airports ||--o{ routes : "destination"
+routes ||--o{ flights : "has"
+flights ||--o{ flight_schedules : "scheduled as"
+flight_schedules ||--o{ bookings : "booked in"
+bookings ||--o{ passengers : "contains"
+bookings ||--o| payment_transactions : "paid via"
+flight_schedules ||--o{ seat_blocks : "temporarily blocks"
+
+' ============ NOTES ============
+
+note right of flight_schedules
+    * Central entity for bookings
+    * Tracks real-time seat availability
+    * Updated via Kafka events
+    * Partitioned by schedule_date
+end note
+
+note right of bookings
+    * PNR is 6-character unique code
+    * Status: PENDING, CONFIRMED, CANCELLED
+    * Two-phase commit with seat blocking
+end note
+
+note right of seat_blocks
+    * Stored in Redis with TTL
+    * Auto-expires after 5 minutes
+    * Prevents double booking
+end note
+
+note bottom of routes
+    * Composite unique constraint on
+      (origin_airport_id, destination_airport_id, airline_id)
+    * Base price used for dynamic pricing
+end note
+
+@enduml

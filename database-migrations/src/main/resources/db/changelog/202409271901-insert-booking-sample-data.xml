@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="insert-booking-sample-data" author="booking-service" context="dev">
+        <comment>Insert sample booking data for development and testing</comment>
+        
+        <!-- Sample confirmed booking 1 -->
+        <insert tableName="bookings">
+            <column name="id" value="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"/>
+            <column name="pnr" value="ABC123"/>
+            <column name="flight_schedule_id" value="550e8400-e29b-41d4-a716-446655440001"/>
+            <column name="flight_number" value="AI101"/>
+            <column name="user_email" value="john.doe@example.com"/>
+            <column name="user_phone" value="+919876543210"/>
+            <column name="total_passengers" value="2"/>
+            <column name="total_amount" value="10000.00"/>
+            <column name="booking_status" value="CONFIRMED"/>
+            <column name="booking_date" valueComputed="CURRENT_TIMESTAMP - INTERVAL '2 days'"/>
+            <column name="departure_date" valueComputed="CURRENT_TIMESTAMP + INTERVAL '5 days'"/>
+            <column name="origin" value="Delhi"/>
+            <column name="destination" value="Mumbai"/>
+        </insert>
+        
+        <!-- Passengers for booking 1 -->
+        <insert tableName="passengers">
+            <column name="id" value="c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"/>
+            <column name="booking_id" value="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"/>
+            <column name="first_name" value="John"/>
+            <column name="last_name" value="Doe"/>
+            <column name="age" value="30"/>
+            <column name="gender" value="MALE"/>
+            <column name="id_type" value="PASSPORT"/>
+            <column name="id_number" value="A1234567"/>
+            <column name="seat_number" value="12A"/>
+        </insert>
+        
+        <insert tableName="passengers">
+            <column name="id" value="d0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"/>
+            <column name="booking_id" value="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"/>
+            <column name="first_name" value="Jane"/>
+            <column name="last_name" value="Doe"/>
+            <column name="age" value="28"/>
+            <column name="gender" value="FEMALE"/>
+            <column name="id_type" value="AADHAR"/>
+            <column name="id_number" value="123456789012"/>
+            <column name="seat_number" value="12B"/>
+        </insert>
+        
+        <!-- Sample cancelled booking 2 -->
+        <insert tableName="bookings">
+            <column name="id" value="e0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"/>
+            <column name="pnr" value="XYZ789"/>
+            <column name="flight_schedule_id" value="550e8400-e29b-41d4-a716-446655440002"/>
+            <column name="flight_number" value="SG201"/>
+            <column name="user_email" value="alice@example.com"/>
+            <column name="user_phone" value="+919876543211"/>
+            <column name="total_passengers" value="1"/>
+            <column name="total_amount" value="5000.00"/>
+            <column name="booking_status" value="CANCELLED"/>
+            <column name="status_reason" value="User requested cancellation"/>
+            <column name="booking_date" valueComputed="CURRENT_TIMESTAMP - INTERVAL '7 days'"/>
+            <column name="departure_date" valueComputed="CURRENT_TIMESTAMP + INTERVAL '10 days'"/>
+            <column name="origin" value="Bangalore"/>
+            <column name="destination" value="Chennai"/>
+        </insert>
+        
+        <insert tableName="passengers">
+            <column name="id" value="f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"/>
+            <column name="booking_id" value="e0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"/>
+            <column name="first_name" value="Alice"/>
+            <column name="last_name" value="Smith"/>
+            <column name="age" value="25"/>
+            <column name="gender" value="FEMALE"/>
+            <column name="id_type" value="DRIVING_LICENSE"/>
+            <column name="id_number" value="DL1234567890"/>
+            <column name="seat_number" value="5C"/>
+        </insert>
+        
+        <!-- Sample pending booking 3 -->
+        <insert tableName="bookings">
+            <column name="id" value="a1eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"/>
+            <column name="pnr" value="PQR456"/>
+            <column name="flight_schedule_id" value="550e8400-e29b-41d4-a716-446655440003"/>
+            <column name="flight_number" value="6E302"/>
+            <column name="user_email" value="bob@example.com"/>
+            <column name="user_phone" value="+919876543212"/>
+            <column name="total_passengers" value="3"/>
+            <column name="total_amount" value="15000.00"/>
+            <column name="booking_status" value="PAYMENT_PENDING"/>
+            <column name="booking_date" valueComputed="CURRENT_TIMESTAMP - INTERVAL '1 hour'"/>
+            <column name="departure_date" valueComputed="CURRENT_TIMESTAMP + INTERVAL '3 days'"/>
+            <column name="origin" value="Mumbai"/>
+            <column name="destination" value="Kolkata"/>
+        </insert>
+        
+        <!-- Passengers for booking 3 -->
+        <insert tableName="passengers">
+            <column name="id" value="a2eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"/>
+            <column name="booking_id" value="a1eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"/>
+            <column name="first_name" value="Bob"/>
+            <column name="last_name" value="Johnson"/>
+            <column name="age" value="35"/>
+            <column name="gender" value="MALE"/>
+            <column name="id_type" value="AADHAR"/>
+            <column name="id_number" value="987654321098"/>
+            <column name="seat_number" value="8A"/>
+        </insert>
+        
+        <insert tableName="passengers">
+            <column name="id" value="a3eebc99-9c0b-4ef8-bb6d-6bb9bd380a14"/>
+            <column name="booking_id" value="a1eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"/>
+            <column name="first_name" value="Carol"/>
+            <column name="last_name" value="Johnson"/>
+            <column name="age" value="32"/>
+            <column name="gender" value="FEMALE"/>
+            <column name="id_type" value="PASSPORT"/>
+            <column name="id_number" value="B9876543"/>
+            <column name="seat_number" value="8B"/>
+        </insert>
+        
+        <insert tableName="passengers">
+            <column name="id" value="a4eebc99-9c0b-4ef8-bb6d-6bb9bd380a15"/>
+            <column name="booking_id" value="a1eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"/>
+            <column name="first_name" value="David"/>
+            <column name="last_name" value="Johnson"/>
+            <column name="age" value="8"/>
+            <column name="gender" value="MALE"/>
+            <column name="id_type" value="AADHAR"/>
+            <column name="id_number" value="123412341234"/>
+            <column name="seat_number" value="8C"/>
+        </insert>
+        
+    </changeSet>
+
+</databaseChangeLog>

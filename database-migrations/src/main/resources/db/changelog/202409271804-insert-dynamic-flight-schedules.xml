@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="clear-old-flight-schedules" author="flight-booking-system">
+        <comment>Clear old flight schedules before inserting dynamic data</comment>
+        <sql><![CDATA[
+            DELETE FROM flight_schedules;
+        ]]></sql>
+    </changeSet>
+
+    <changeSet id="insert-dynamic-flight-schedules" author="flight-booking-system">
+        <comment>Insert flight schedules for the next 30 days from current date</comment>
+        <sql><![CDATA[
+            -- DEL-BOM route (AI101, AI102, AI103)
+            INSERT INTO flight_schedules (flight_number, schedule_date, departure_date_time, arrival_date_time, available_seats, price, status)
+            SELECT
+                flight.flight_number,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.arrival_time,
+                flight.available_seats,
+                flight.price,
+                'SCHEDULED'
+            FROM (
+                SELECT generate_series(
+                    CURRENT_DATE + INTERVAL '1 day',
+                    CURRENT_DATE + INTERVAL '30 days',
+                    INTERVAL '1 day'
+                )::date as schedule_date
+            ) dates
+            CROSS JOIN (
+                VALUES
+                    ('AI101', TIME '06:00:00', TIME '08:30:00', 180, 4500.00),
+                    ('AI102', TIME '12:30:00', TIME '15:00:00', 180, 5200.00),
+                    ('AI103', TIME '18:45:00', TIME '21:15:00', 180, 4800.00)
+            ) AS flight(flight_number, departure_time, arrival_time, available_seats, price);
+
+            -- BOM-DEL route (AI201, AI202, AI203)
+            INSERT INTO flight_schedules (flight_number, schedule_date, departure_date_time, arrival_date_time, available_seats, price, status)
+            SELECT
+                flight.flight_number,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.arrival_time,
+                flight.available_seats,
+                flight.price,
+                'SCHEDULED'
+            FROM (
+                SELECT generate_series(
+                    CURRENT_DATE + INTERVAL '1 day',
+                    CURRENT_DATE + INTERVAL '30 days',
+                    INTERVAL '1 day'
+                )::date as schedule_date
+            ) dates
+            CROSS JOIN (
+                VALUES
+                    ('AI201', TIME '07:30:00', TIME '10:00:00', 180, 4500.00),
+                    ('AI202', TIME '14:00:00', TIME '16:30:00', 180, 5200.00),
+                    ('AI203', TIME '20:15:00', TIME '22:45:00', 180, 4800.00)
+            ) AS flight(flight_number, departure_time, arrival_time, available_seats, price);
+
+            -- DEL-BLR route (AI301, AI302)
+            INSERT INTO flight_schedules (flight_number, schedule_date, departure_date_time, arrival_date_time, available_seats, price, status)
+            SELECT
+                flight.flight_number,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.arrival_time,
+                flight.available_seats,
+                flight.price,
+                'SCHEDULED'
+            FROM (
+                SELECT generate_series(
+                    CURRENT_DATE + INTERVAL '1 day',
+                    CURRENT_DATE + INTERVAL '30 days',
+                    INTERVAL '1 day'
+                )::date as schedule_date
+            ) dates
+            CROSS JOIN (
+                VALUES
+                    ('AI301', TIME '08:00:00', TIME '11:00:00', 180, 5500.00),
+                    ('AI302', TIME '16:30:00', TIME '19:30:00', 180, 5800.00)
+            ) AS flight(flight_number, departure_time, arrival_time, available_seats, price);
+
+            -- BLR-DEL route (AI401, AI402)
+            INSERT INTO flight_schedules (flight_number, schedule_date, departure_date_time, arrival_date_time, available_seats, price, status)
+            SELECT
+                flight.flight_number,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.arrival_time,
+                flight.available_seats,
+                flight.price,
+                'SCHEDULED'
+            FROM (
+                SELECT generate_series(
+                    CURRENT_DATE + INTERVAL '1 day',
+                    CURRENT_DATE + INTERVAL '30 days',
+                    INTERVAL '1 day'
+                )::date as schedule_date
+            ) dates
+            CROSS JOIN (
+                VALUES
+                    ('AI401', TIME '09:30:00', TIME '12:30:00', 180, 5500.00),
+                    ('AI402', TIME '18:00:00', TIME '21:00:00', 180, 5800.00)
+            ) AS flight(flight_number, departure_time, arrival_time, available_seats, price);
+
+            -- BOM-BLR route (AI501, AI502)
+            INSERT INTO flight_schedules (flight_number, schedule_date, departure_date_time, arrival_date_time, available_seats, price, status)
+            SELECT
+                flight.flight_number,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.arrival_time,
+                flight.available_seats,
+                flight.price,
+                'SCHEDULED'
+            FROM (
+                SELECT generate_series(
+                    CURRENT_DATE + INTERVAL '1 day',
+                    CURRENT_DATE + INTERVAL '30 days',
+                    INTERVAL '1 day'
+                )::date as schedule_date
+            ) dates
+            CROSS JOIN (
+                VALUES
+                    ('AI501', TIME '10:00:00', TIME '12:00:00', 180, 3500.00),
+                    ('AI502', TIME '17:30:00', TIME '19:30:00', 180, 3800.00)
+            ) AS flight(flight_number, departure_time, arrival_time, available_seats, price);
+
+            -- BLR-BOM route (AI601, AI602)
+            INSERT INTO flight_schedules (flight_number, schedule_date, departure_date_time, arrival_date_time, available_seats, price, status)
+            SELECT
+                flight.flight_number,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.arrival_time,
+                flight.available_seats,
+                flight.price,
+                'SCHEDULED'
+            FROM (
+                SELECT generate_series(
+                    CURRENT_DATE + INTERVAL '1 day',
+                    CURRENT_DATE + INTERVAL '30 days',
+                    INTERVAL '1 day'
+                )::date as schedule_date
+            ) dates
+            CROSS JOIN (
+                VALUES
+                    ('AI601', TIME '11:30:00', TIME '13:30:00', 180, 3500.00),
+                    ('AI602', TIME '19:00:00', TIME '21:00:00', 180, 3800.00)
+            ) AS flight(flight_number, departure_time, arrival_time, available_seats, price);
+
+            -- DEL-HYD route (AI701, AI702)
+            INSERT INTO flight_schedules (flight_number, schedule_date, departure_date_time, arrival_date_time, available_seats, price, status)
+            SELECT
+                flight.flight_number,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.arrival_time,
+                flight.available_seats,
+                flight.price,
+                'SCHEDULED'
+            FROM (
+                SELECT generate_series(
+                    CURRENT_DATE + INTERVAL '1 day',
+                    CURRENT_DATE + INTERVAL '30 days',
+                    INTERVAL '1 day'
+                )::date as schedule_date
+            ) dates
+            CROSS JOIN (
+                VALUES
+                    ('AI701', TIME '07:00:00', TIME '09:30:00', 180, 4800.00),
+                    ('AI702', TIME '15:30:00', TIME '18:00:00', 180, 5000.00)
+            ) AS flight(flight_number, departure_time, arrival_time, available_seats, price);
+
+            -- HYD-DEL route (AI801, AI802)
+            INSERT INTO flight_schedules (flight_number, schedule_date, departure_date_time, arrival_date_time, available_seats, price, status)
+            SELECT
+                flight.flight_number,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.departure_time,
+                dates.schedule_date + flight.arrival_time,
+                flight.available_seats,
+                flight.price,
+                'SCHEDULED'
+            FROM (
+                SELECT generate_series(
+                    CURRENT_DATE + INTERVAL '1 day',
+                    CURRENT_DATE + INTERVAL '30 days',
+                    INTERVAL '1 day'
+                )::date as schedule_date
+            ) dates
+            CROSS JOIN (
+                VALUES
+                    ('AI801', TIME '10:30:00', TIME '13:00:00', 180, 4800.00),
+                    ('AI802', TIME '19:00:00', TIME '21:30:00', 180, 5000.00)
+            ) AS flight(flight_number, departure_time, arrival_time, available_seats, price);
+        ]]></sql>
+    </changeSet>
+
+    <changeSet id="add-varied-seat-availability" author="flight-booking-system">
+        <comment>Update some flights to have varied seat availability to simulate bookings</comment>
+        <sql><![CDATA[
+            -- Randomly reduce available seats for some flights to simulate bookings
+            UPDATE flight_schedules
+            SET available_seats = 180 - (FLOOR(RANDOM() * 50)::int)
+            WHERE departure_date_time BETWEEN CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP + INTERVAL '7 days'
+            AND RANDOM() < 0.6;
+
+            -- Popular routes have more bookings
+            UPDATE flight_schedules
+            SET available_seats = available_seats - (FLOOR(RANDOM() * 30)::int)
+            WHERE flight_number IN ('AI101', 'AI102', 'AI201', 'AI202')
+            AND departure_date_time BETWEEN CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP + INTERVAL '3 days'
+            AND available_seats > 30;
+        ]]></sql>
+    </changeSet>
+
+</databaseChangeLog>

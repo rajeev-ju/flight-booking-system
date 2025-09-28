@@ -1,0 +1,140 @@
+{
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "keyword"
+      },
+      "origin": {
+        "type": "keyword",
+        "fields": {
+          "text": {
+            "type": "text",
+            "analyzer": "standard"
+          }
+        }
+      },
+      "destination": {
+        "type": "keyword",
+        "fields": {
+          "text": {
+            "type": "text",
+            "analyzer": "standard"
+          }
+        }
+      },
+      "date": {
+        "type": "date",
+        "format": "yyyy-MM-dd||yyyy-MM-dd'T'HH:mm:ss||epoch_millis"
+      },
+      "routes": {
+        "type": "nested",
+        "properties": {
+          "routeId": {
+            "type": "keyword"
+          },
+          "type": {
+            "type": "keyword"
+          },
+          "totalDuration": {
+            "type": "integer"
+          },
+          "totalPrice": {
+            "type": "double"
+          },
+          "availableSeats": {
+            "type": "integer"
+          },
+          "segments": {
+            "type": "nested",
+            "properties": {
+              "flightNumber": {
+                "type": "keyword"
+              },
+              "airline": {
+                "type": "keyword",
+                "fields": {
+                  "text": {
+                    "type": "text",
+                    "analyzer": "standard"
+                  }
+                }
+              },
+              "origin": {
+                "type": "keyword"
+              },
+              "destination": {
+                "type": "keyword"
+              },
+              "departureDateTime": {
+                "type": "date",
+                "format": "yyyy-MM-dd'T'HH:mm:ss"
+              },
+              "arrivalDateTime": {
+                "type": "date",
+                "format": "yyyy-MM-dd'T'HH:mm:ss"
+              },
+              "duration": {
+                "type": "integer"
+              },
+              "aircraft": {
+                "type": "keyword",
+                "fields": {
+                  "text": {
+                    "type": "text",
+                    "analyzer": "standard"
+                  }
+                }
+              },
+              "price": {
+                "type": "double"
+              },
+              "availableSeats": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "lastUpdated": {
+        "type": "date",
+        "format": "yyyy-MM-dd'T'HH:mm:ss||epoch_millis"
+      },
+      "searchMetadata": {
+        "properties": {
+          "popularRoute": {
+            "type": "boolean"
+          },
+          "searchCount": {
+            "type": "long"
+          },
+          "averagePrice": {
+            "type": "double"
+          },
+          "minPrice": {
+            "type": "double"
+          },
+          "maxPrice": {
+            "type": "double"
+          },
+          "fastestDuration": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "settings": {
+    "number_of_shards": 3,
+    "number_of_replicas": 1,
+    "refresh_interval": "30s",
+    "analysis": {
+      "analyzer": {
+        "airport_analyzer": {
+          "type": "custom",
+          "tokenizer": "keyword",
+          "filter": ["uppercase"]
+        }
+      }
+    }
+  }
+}
